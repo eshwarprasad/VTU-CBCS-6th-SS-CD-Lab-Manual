@@ -32,3 +32,29 @@ DIGIT input {dig++;}
 | OP {op++;}
 ;
 %%
+#include <stdio.h>
+extern int yylex();
+extern int yyparse();
+extern FILE *yyin;
+main()
+{
+FILE *myfile = fopen("input.c", "r");
+if (!myfile)
+{
+printf("I can't open input.c!");
+return -1;
+}
+yyin = myfile;
+do
+{
+yyparse();
+}
+while (!feof(yyin));
+printf("Number of numbers = %d\n Number ofKeywords = %d\n Number of
+Identifiers = %d\n Number of noperators = %d\n",dig, key,id, op);
+}
+int yyerror()
+{
+printf("error");
+exit(0);
+}
